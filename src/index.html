@@ -6,6 +6,7 @@
   <link href="/output.css" rel="stylesheet">
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <link rel="icon" type="image/png" href="/favicon-32x32.png">
+  <script src = /main.js defer></script>
 </head>
 <body class="bg-gradient-to-br from-indigo-500 via-blue-900 to-rose-500 min-h-screen">
   <div class="container mx-auto px-4 py-16">
@@ -26,16 +27,18 @@
       </p>
 
       <!-- Email Form -->
-      <div class="flex justify-center gap-4 mb-20">
+      <form onsubmit="submitEmail(event)" class="flex justify-center gap-4 mb-20">
         <input 
+          id="email-input"
           type="email" 
           placeholder="Enter your email" 
           class="px-6 py-4 rounded-lg bg-slate-800/80 border border-slate-700 text-white w-96"
+          required
         >
         <button class="px-4 py-4 bg-gradient-to-r from-amber-500 to-rose-500 rounded-lg font-bold hover:opacity-90 transition">
           Join The Waitlist →
         </button>
-      </div>
+      </form>
 
       <!-- Features Grid -->
       <div class="grid md:grid-cols-3 gap-8 text-center">
