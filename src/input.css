@@ -1,1 +1,204 @@
 @import "tailwindcss";
+
+/* ============================================
+   Design Tokens
+   ============================================ */
+
+@layer base {
+  :root {
+    --text-primary: #eceae5;
+    --text-secondary: #b8b4ad;
+    --text-muted: #716d65;
+    --text-placeholder: #55524c;
+
+    --bg-surface: #1d1f24;
+    --border-focus: #a78bfa;
+
+    --accent-coral: #f0856e;
+    --accent-violet: #a78bfa;
+
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+  }
+}
+
+/* ============================================
+   Theme
+   ============================================ */
+
+@theme {
+  --font-display: 'DM Serif Display', serif;
+  --font-ui: 'Instrument Sans', sans-serif;
+  --color-primary: #eceae5;
+  --color-secondary: #b8b4ad;
+  --color-muted: #716d65;
+  --color-coral: #f0856e;
+  --color-violet-300: #a78bfa;
+}
+
+/* ============================================
+   Base
+   ============================================ */
+
+@layer base {
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(167, 139, 250, 0.3);
+  }
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+
+@utility text-primary {
+  color: var(--text-primary);
+}
+
+@utility text-secondary {
+  color: var(--text-secondary);
+}
+
+@utility text-muted {
+  color: var(--text-muted);
+}
+
+@utility text-display {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+@utility text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@utility text-body {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@utility text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@utility text-caption {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* Responsive display */
+@media (min-width: 768px) {
+  .text-display {
+    font-size: 3.25rem;
+  }
+}
+
+/* ============================================
+   Landing Page Styles
+   ============================================ */
+
+@layer components {
+  /* Overscroll background — matches darkest gradient stop */
+  html {
+    background-color: #0f172a;
+  }
+
+  /* Gradient background */
+  .landing-bg {
+    background: linear-gradient(135deg, #312e81 0%, #1e1b4b 30%, #0f172a 60%, #4c1d3e 100%);
+    min-height: 100vh;
+  }
+
+  /* Feature cards */
+  .feature-card {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color var(--duration-fast) ease-out;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Waitlist input */
+  .waitlist-input {
+    transition: box-shadow var(--duration-fast) ease-out;
+  }
+
+  .waitlist-input::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  .waitlist-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-violet);
+  }
+
+  /* Waitlist button */
+  .waitlist-btn {
+    background: linear-gradient(135deg, var(--accent-coral), #e06b9f);
+    color: white;
+    font-family: 'Instrument Sans', sans-serif;
+    cursor: pointer;
+    transition: opacity var(--duration-fast) ease-out,
+                box-shadow var(--duration-fast) ease-out;
+  }
+
+  .waitlist-btn:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  .waitlist-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.6), 0 0 0 4px var(--accent-violet);
+  }
+
+  .waitlist-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+/* ============================================
+   Entrance Animations
+   ============================================ */
+
+@layer components {
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--duration-normal) ease-out,
+                transform var(--duration-normal) ease-out;
+  }
+
+  [data-animate].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .feature-card {
+    transition: none;
+  }
+}
