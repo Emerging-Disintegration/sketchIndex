@@ -1,6 +1,6 @@
-// Waitlist endpoint
-const WAITLIST_ENDPOINT =
-  'https://script.google.com/macros/s/AKfycbzcTs952DPWxDaBs7SHJm5Zr5UhgTLYWutGYGhlBez1Plmn6JD48eLRHmUVthner0tGrA/exec';
+// Supabase config
+const SUPABASE_URL = 'https://nfomssavbawtdtxycmmp.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_POpfJfMlNwcgKdB6Q5DtRQ_9hVNw_lv';
 
 async function submitEmail(event) {
   event.preventDefault();
@@ -16,29 +16,32 @@ async function submitEmail(event) {
     button.disabled = true;
     button.textContent = 'Submitting...';
 
-    const response = await fetch(WAITLIST_ENDPOINT, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist_emails`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal',
+      },
       body: JSON.stringify({ email }),
     });
 
     if (response.ok) {
-      button.textContent = 'You\'re on the list!';
+      button.textContent = "You're on the list!";
       input.value = '';
-      setTimeout(() => {
-        button.textContent = 'Join The Waitlist';
-        button.disabled = false;
-      }, 3000);
+    } else if (response.status === 409) {
+      button.textContent = 'Already signed up!';
     } else {
       throw new Error('Failed to submit');
     }
   } catch (error) {
     button.textContent = 'Something went wrong';
+  } finally {
     setTimeout(() => {
       button.textContent = 'Join The Waitlist';
       button.disabled = false;
-    }, 2500);
+    }, 3000);
   }
 }
 
